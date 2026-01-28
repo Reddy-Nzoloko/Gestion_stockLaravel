@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return redirect('/produits'); }); // Redirige l'accueil
+
+Route::get('/produits', [ProductController::class, 'index'])->name('produits.index');
+Route::get('/produits/creer', [ProductController::class, 'create'])->name('produits.create');
+Route::post('/produits', [ProductController::class, 'store'])->name('produits.store');
