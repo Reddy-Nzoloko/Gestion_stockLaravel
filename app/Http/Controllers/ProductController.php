@@ -1,36 +1,57 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
-    // 1. Afficher la liste des produits
-    public function index() {
-        $produits = Product::all();
+    /**
+     * Affiche la liste du stock
+     */
+    public function index()
+    {
+        // On récupère les produits par ordre de création (le plus récent en premier)
+        $produits = Product::latest()->get();
         return view('produits.index', compact('produits'));
     }
 
-    // 2. Afficher le formulaire de création
-    public function create() {
+    /**
+     * Affiche le formulaire de création
+     */
+    public function create()
+    {
         return view('produits.create');
     }
 
-    // 3. Enregistrer le produit dans la base de données
-    public function store(Request $request) {
-        // Validation : on vérifie que les champs sont bien remplis
-        $request->validate([
-            'nom' => 'required',
-            'reference' => 'required|unique:products',
-            'quantite' => 'required|integer',
-            'prix' => 'required|numeric',
+    /**
+     * Enregistre un nouveau produit avec sécurité
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nom'       => 'required|string|max:255',
+            'reference' => 'required|string|unique:products,reference',
+            'quantite'  => 'required|integer|min:0',
+            'prix'      => 'required|numeric|min:0',
         ]);
 
-        // Création du produit
-        Product::create($request->all());
+        try {
+            Product::create($validated);
+            return redirect()->route('produits.index')->with('success', 'Produit ajouté avec succès !');
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'Erreur lors de l\'ajout : ' . $e->getMessage());
+        }
+    }
 
-        // Redirection vers la liste avec un message de succès
-        return redirect()->route('produits.index')->with('success', 'Produit ajouté !');
+    /**
+     * Supprime un produit du stock
+     */
+    public function destroy(Product $product)
+    {
+        $product->delete();
+        return redirect()->route('produits.index')->with('success', 'Produit supprimé.');
     }
 }
