@@ -30,7 +30,20 @@
                     <td class="border p-2 text-center">{{ $p->reference }}</td>
                     <td class="border p-2 text-center">{{ $p->quantite }}</td>
                     <td class="border p-2 text-right">{{ $p->prix }} €</td>
+
+                    {{-- Ajout de l'action de suppression et de modification --}}
+                    <td>
+    <a href="{{ route('produits.edit', $product->id) }}">Modifier</a>
+
+    <form action="{{ route('produits.destroy', $product->id) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" onclick="return confirm('Supprimer ce produit ?')">Supprimer</button>
+    </form>
+</td>
                 </tr>
+
+
                 @endforeach
             </tbody>
         </table>

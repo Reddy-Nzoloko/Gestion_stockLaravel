@@ -49,9 +49,34 @@ class ProductController extends Controller
     /**
      * Supprime un produit du stock
      */
-    public function destroy(Product $product)
-    {
-        $product->delete();
-        return redirect()->route('produits.index')->with('success', 'Produit supprimé.');
-    }
+    // public function destroy(Product $product)
+    // {
+    //     $product->delete();
+    //     return redirect()->route('produits.index')->with('success', 'Produit supprimé.');
+    // }
+
+    // Modification des nouveau produit
+    // Affiche le formulaire de modification
+public function edit(Product $product) {
+    return view('produits.edit', compact('product'));
+}
+
+// Enregistre les modifications
+public function update(Request $request, Product $product) {
+    $validated = $request->validate([
+        'nom' => 'required',
+        'reference' => 'required|unique:products,reference,' . $product->id,
+        'quantite' => 'required|integer',
+        'prix' => 'required|numeric',
+    ]);
+
+    $product->update($validated);
+    return redirect()->route('produits.index')->with('success', 'Produit mis à jour !');
+}
+
+// Supprime le produit
+public function destroy(Product $product) {
+    $product->delete();
+    return redirect()->route('produits.index')->with('success', 'Produit supprimé !');
+}
 }
