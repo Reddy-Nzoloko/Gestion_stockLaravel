@@ -19,7 +19,7 @@ return [
     |--------------------------------------------------------------------------
     | Queue Connections
     |--------------------------------------------------------------------------
-    |
+            |ceci est un fommencetaire pour le commit du hour je pense deja voir le caracteur 
     | Here you may configure the connection options for every queue backend
     | used by your application. An example configuration is provided for
     | each backend supported by Laravel. You're also free to add more.
