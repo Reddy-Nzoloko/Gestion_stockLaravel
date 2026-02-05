@@ -2,9 +2,8 @@
     @csrf
     @method('PUT')
 
+    <label>Nom du produit :</label>
     <input type="text" name="nom" value="{{ $product->nom }}">
-    <input type="number" name="quantite" value="{{ $product->quantite }}">
-    <input type="text" name="prix" value="{{ $product->prix }}">
 
     <button type="submit">Mettre à jour</button>
 </form>

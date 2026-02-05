@@ -57,7 +57,9 @@ class ProductController extends Controller
 
     // Modification des nouveau produit
     // Affiche le formulaire de modification
-public function edit(Product $product) {
+public function edit(Product $product) // Laravel injecte le produit ici grâce à l'ID
+{
+    // On passe la variable $product (au singulier) à la vue
     return view('produits.edit', compact('product'));
 }
 
