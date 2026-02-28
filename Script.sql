@@ -10,3 +10,4 @@ insert into pruducts where ....
 -- la creation des triggers ne doit pas manquer  
 -- creations des procedures 
 select nom from produit
+update prenom from utilisateur
