@@ -11,3 +11,4 @@ insert into pruducts where ....
 -- creations des procedures 
 select nom from produit
 update prenom from utilisateur
+migrate fresh commende pour vider les migration 
