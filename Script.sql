@@ -12,3 +12,4 @@ insert into pruducts where ....
 select nom from produit
 update prenom from utilisateur
 migrate fresh commende pour vider les migration 
+php migrate: quand on fait une migration est qu'on veut que cette migration se creer dans la bdd
